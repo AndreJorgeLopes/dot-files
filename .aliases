@@ -1,0 +1,65 @@
+# ALIASES
+#alias cd='z'
+alias ci='zi'
+alias home='cd ~' # just writting an tilde works too
+alias back="popd &> /dev/null" # just writting an hifen works too
+alias cat="glow"
+alias bat="bat --theme OneHalfDark"
+alias d='docker'
+alias y='yarn'
+alias python='python3.10'
+alias zshconfig='code $HOME/.zshrc'
+alias aliases='code $HOME/.aliases'
+alias config='dotbare'
+alias update='sudo apt-get update -y'
+alias upgrade='sudo apt-get upgrade -y'
+alias update-debian='sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y'
+alias myip='curl http://ipecho.net/plain; echo'
+alias code='code-insiders'
+alias c='code .'
+alias x='exit'
+alias s='sudo'
+
+alias install='sudo apt-get install -y'
+alias remove='sudo apt-get remove -y'
+alias uninstall='sudo apt-get remove -y'
+
+# Disabled because I'm using mac at the moment
+# alias shutdown="cmd wsl --shutdown"
+# alias reboot="cmd wsl --shutdown"
+# alias restart="cmd wsl --shutdown"
+
+alias dev="cd $HOME/dev"
+alias ls='exa -lahF --group-directories-first --color=auto --git --icons --no-permissions --no-user --long --grid --git-ignore'
+alias ll='exa -lahF --group-directories-first --color=auto --git --icons --long --grid'
+alias rf='sudo rm -r'
+alias rff='sudo rm -rf'
+alias mkdir="take -pv"
+alias reload='exec ${SHELL} -l' # ^ + L
+alias edit='sudo nano'
+alias top='gotop -a -p'
+alias version="lsb_release -a"
+alias arch='dpkg --print-architecture'
+alias dtop="lazydocker"
+alias rename="rff node_modules && mv"
+alias fuck_node='rff node_modules && y install'
+alias yag='yarn global add'
+alias yad='yarn add -D'
+alias top-history="history 0 | awk '{print \$2}' | sort | uniq -c | sort -r | head"
+
+# GIT ALIASES
+alias gl='git-igitt -f "[%an]%d %s -> %h"'
+alias gcr='git commit --amend -m'
+alias gc='git commit -m'
+# alias gc='cz'
+alias gb='git checkout -b'
+alias gcb='git checkout -b'
+alias gco='git checkout -b'
+alias switch='git switch'
+alias gs='git stash'
+alias gsp='git stash pop'
+alias gss='git stash save -u'
+alias gw='git worktree'
+alias gwl='git worktree list'
+alias gp-remote='git push --set-upstream'
+alias git-remove-merged="git branch --merged | egrep -v '(^\*|master|main|dev|qa)' | xargs git branch -d"

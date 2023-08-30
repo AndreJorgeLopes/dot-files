@@ -1,0 +1,42 @@
+[user]
+	name = AndreJorgeLopes
+	email = andre.lopes@sixt.com
+	signingkey = /Users/andrejorgelopes/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys/0bc79091be386e43dbd512ae0b31fa10.pub
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /Users/andrejorgelopes/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+		features = decorations
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default

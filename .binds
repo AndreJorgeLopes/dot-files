@@ -1,0 +1,13 @@
+# WIDGETS
+zle -N insert-last-command-output
+
+# Keybinds(please tell me a better way to do keybinds)
+bindkey -e
+bindkey -s '\eh' '^Uread cht_search && cht.sh $cht_search | cat^M' # [alt/esc + H] cheat sheet documentation search with fzf
+bindkey -s '\ef' '^Ufind-man^M' # [alt/esc + F] search man pages
+bindkey -s '\ea' '^Ufzf_alias^M' # [alt/esc + a] Search aliases with fzf
+bindkey -s '^a' '^Ufzf_alias^M' # [ctrl + a] Search aliases with fzf
+bindkey '^o' insert-last-command-output # [ctrl + o] Paste the ouput of the last command
+bindkey '^H' backward-kill-word # [ctrl + delete] delete next word after cursor
+bindkey '5~' kill-word # [ctrl + backspace] delete last word before cursor
+bindkey '\u001b[\u0055' kill-whole-line # [ctrl + U (windows terminal)] delete all current text in line
