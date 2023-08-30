@@ -10,11 +10,11 @@ alias y='yarn'
 alias python='python3.10'
 alias zshconfig='code $HOME/.zshrc'
 alias aliases='code $HOME/.aliases'
-alias config='dotbare'
 alias update='sudo apt-get update -y'
 alias upgrade='sudo apt-get upgrade -y'
 alias update-debian='sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y'
-alias myip='curl http://ipecho.net/plain; echo'
+alias ip='ipconfig getifaddr en0'
+alias eip='curl --silent http://ipecho.net/plain; echo'
 alias code='code-insiders'
 alias c='code .'
 alias x='exit'
@@ -46,12 +46,14 @@ alias fuck_node='rff node_modules && y install'
 alias yag='yarn global add'
 alias yad='yarn add -D'
 alias top-history="history 0 | awk '{print \$2}' | sort | uniq -c | sort -r | head"
+alias toggle-port='sudo bash -c "port=$1; if pfctl -s Rules | grep -q \$port; then pfctl -a com.apple/250.PortBlacklist/ -f /etc/pf.conf; else echo \"block drop proto tcp from any to any port \$port\" >> /etc/pf.conf; pfctl -a com.apple/250.PortBlacklist/ -f /etc/pf.conf; fi"'
 
 # GIT ALIASES
 alias gl='git-igitt -f "[%an]%d %s -> %h"'
 alias gcr='git commit --amend -m'
 alias gc='git commit -m'
 # alias gc='cz'
+alias ga='git add'
 alias gb='git checkout -b'
 alias gcb='git checkout -b'
 alias gco='git checkout -b'
@@ -59,7 +61,22 @@ alias switch='git switch'
 alias gs='git stash'
 alias gsp='git stash pop'
 alias gss='git stash save -u'
+alias gst='git status -sb'
 alias gw='git worktree'
 alias gwl='git worktree list'
+alias mergetest='git merge --no-commit --no-ff "$1"; git merge --abort; echo "Merge aborted"'
 alias gp-remote='git push --set-upstream'
 alias git-remove-merged="git branch --merged | egrep -v '(^\*|master|main|dev|qa)' | xargs git branch -d"
+alias git-serve='echo "connect using:\n\033[38;5;250m git fetch \033[38;5;46mgit://$(ipconfig getifaddr en0)/\n \033[38;5;15m or \n\033[38;5;250m git clone \033[38;5;46mgit://$(ipconfig getifaddr en0)/ \033[38;5;147m"; git daemon --verbose --export-all --base-path=$(git rev-parse --show-toplevel)/.git --reuseaddr --strict-paths $(git rev-parse --show-toplevel)/.git/; echo "\033[0m"'
+# git rebase force even with untracked and unstaged changes
+alias grf='f() { echo fetching...; git fetch; if [ $? -eq 0 ]; then last_status=$(git status --untracked-files=no --porcelain); if [ "$last_status" != "" ]; then echo stashing local changes...; git stash; else echo nothing to stash...; fi; if [ $? -eq 0 ]; then echo rebasing...; git rebase; if [ $? -eq 0 ]; then if [ "$last_status" != "" ]; then echo applying stashed changes...; git stash pop; if [ $? -ne 0 ]; then echo STASH POP FAIL - you will need to resolve merge conflicts with git mergetool; fi; fi; else echo REBASE FAILED - you will need to manually run stash pop; fi; fi; fi; if [ $? -ne 0 ]; then echo ERROR: Operation failed; fi; }; f'
+
+# config aliases
+alias config='dotbare'
+alias coa='config add' # "co-nfig" "a-dd"
+alias coal='config add -u' # "co-nfig" "a-dd" "al-l"
+alias cop='config push' # "co-nfig" "p-ush"
+alias col='config flog' # "co-nfig" "l-og"
+alias coe='config fedit' # "co-nfig" "e-dit"
+alias coc='config commit -m' # "co-nfig" "c-ommit"
+alias cos='config status -sb' # "co-nfig" "s-tatus"

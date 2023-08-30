@@ -175,16 +175,18 @@ source ~/.env
   # Function to fetch ETF price and update cache
   fetch_and_update_etf_price() {
     local etf_symbol="XNTK"
-    local api_url="https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=$etf_symbol&apikey=$API_KEY"
+    local alpha_api_url="https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=$etf_symbol&apikey=$ALPHA_API_KEY"
+    local finage_api_url="https://api.finage.co.uk/last/trade/stock/$etf_symbol?apikey=$FINAGE_API_KEY"
 
-    local data=$(curl -s "$api_url")
+    local price_data=$(curl -s "$finage_api_url")
+    local change_data=$(curl -s "$alpha_api_url")
 
     local price
-    price=$(echo "$data" | jq -r '.["Global Quote"]["05. price"]')
-    price=$(printf "%.2f" "$price")  # Format to two decimal places
+    price=$(echo "$price_data" | jq -r '.["price"]')
+    price=$(printf "%.2f" "$price")  # Format to two decimal places if needed
 
     local previous_close
-    previous_close=$(echo "$data" | jq -r '.["Global Quote"]["08. previous close"]')
+    previous_close=$(echo "$change_data" | jq -r '.["Global Quote"]["08. previous close"]')
     previous_close=$(printf "%.2f" "$previous_close")  # Format to two decimal places
 
     # Update cache file with fetched price and current timestamp
@@ -210,7 +212,7 @@ source ~/.env
       local cached_price=$(cut -d ',' -f2 < "$cache_file")
       local elapsed_time=$(($current_time - $last_fetched_timestamp))
 
-      if [[ $elapsed_time -lt 3600 ]]; then  # 3600 seconds = 1 hour
+      if [[ $elapsed_time -lt 1800 ]]; then  # 1800 seconds = 30 minutes
         echo "$cached_price"
         return
       fi
@@ -220,19 +222,57 @@ source ~/.env
     (fetch_and_update_etf_price &)
   }
 
+  # Function to confirm if the market is closed (ET timezone)
+  is_market_closed() {
+    local cache_file="$HOME/.etf_price_cache"
+    local current_date=$(date +%s)
+
+    opening_time="09:30"  # XNTK opening time (HH:MM AM/PM)
+    closing_time="16:15"  # XNTK closing time (HH:MM AM/PM)
+
+    # Convert the timestamp to hours and minutes
+    timestamp_hour=$(date -r "$current_date" "+%H")
+    timestamp_minute=$(date -r "$current_date" "+%M")
+
+    # Convert the opening and closing times to hours and minutes
+    opening_hour=$(echo "$opening_time" | awk -F':' '{print $1}')
+    opening_minute=$(echo "$opening_time" | awk -F':' '{print $2}')
+
+    closing_hour=$(echo "$closing_time" | awk -F':' '{print $1}')
+    closing_minute=$(echo "$closing_time" | awk -F':' '{print $2}')
+
+    # Convert all times to minutes since midnight
+    current_minutes=$((timestamp_hour * 60 + timestamp_minute))
+    opening_minutes=$((opening_hour * 60 + opening_minute))
+    closing_minutes=$((closing_hour * 60 + closing_minute))
+
+    # Check if the current time falls within trading hours
+    if (( current_minutes >= opening_minutes && current_minutes <= closing_minutes )); then
+      echo "false"
+    else
+      echo "true"
+    fi
+  }
+
   # Function to format the ETF price segment# Custom ETF price segment
   function prompt_etf_price() {
     local price=$(get_cached_etf_price)
-    previous_close=$(get_previous_close_value)
+    local previous_close=$(get_previous_close_value)
+    local market_closed=$(is_market_closed)
 
     local color="#FFFFFF"  # Default color
-    local icon="🔒"  # Default icon
+    local icon="━"  # Default icon
     if (( $(awk -v a="$previous_close" -v b="$price" 'BEGIN { print (a > b) }') )); then
       color="#ff5555"
       icon="📉"
     elif (( $(awk -v a="$previous_close" -v b="$price" 'BEGIN { print (a < b) }') )); then
       color="#50fa7b"
       icon="📈"
+    fi
+
+    # Add a lock icon if the market is closed
+    if [ "$market_closed" = "true" ]; then
+      icon+="🔒"
     fi
 
     typeset -g POWERLEVEL9K_ETF_PRICE_FOREGROUND="$color"  # Set the color
