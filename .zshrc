@@ -93,7 +93,7 @@ antigen apply
 export ZSH="$HOME/.oh-my-zsh"
 
 # Export prefered editor
-export EDITOR='nano'
+export EDITOR='code-insiders'
 
 # Get the colors in the opened man/bro page itself
 export MANPAGER="sh -c 'col -bx | bat -l man -p --paging always'"
