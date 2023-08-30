@@ -1,17 +1,17 @@
 [user]
-	name = AndreJorgeLopes
-	email = andre.lopes@sixt.com
-	signingkey = /Users/andrejorgelopes/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys/0bc79091be386e43dbd512ae0b31fa10.pub
+    name = AndreJorgeLopes
+    email = andre.lopes@sixt.com
+    signingkey = /Users/andrejorgelopes/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys/0bc79091be386e43dbd512ae0b31fa10.pub
 [url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
+    insteadOf = https://github.com/
 [commit]
-	gpgsign = true
+    gpgsign = true
 [tag]
-	gpgSign = true
+    gpgSign = true
 [gpg]
-	format = ssh
+    format = ssh
 [gpg "ssh"]
-	allowedSignersFile = /Users/andrejorgelopes/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys
+    allowedSignersFile = /Users/andrejorgelopes/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys
 [core]
     pager = delta
 
