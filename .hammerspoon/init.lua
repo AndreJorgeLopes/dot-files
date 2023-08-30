@@ -77,7 +77,7 @@ hs.window.filter.new(kittyApp)
     print("kittyOpen:", isKittyOpen())
     print("lastActiveApp:", lastActiveApp)
     print("appName:", appName)
-    if (lastActiveApp ~= "kitty") and (appName ~= "kitty") and (isKittyOpen()) then
+    if lastActiveApp ~= "kitty" and appName ~= "kitty" and isKittyOpen() then
       closeKitty()
     end
   end)
