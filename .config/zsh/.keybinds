@@ -1,0 +1,24 @@
+# Better word deletion
+bindkey '^W' backward-kill-word           # Ctrl+W delete previous word
+bindkey '^[w' backward-kill-word          # Alt+W delete previous word (Meta+w)
+
+# Forward word deletion
+bindkey '^K' kill-line                    # Ctrl+K kill to end of line
+bindkey '^U' backward-kill-line           # Ctrl+U kill from cursor to start
+
+# Word-wise cursor movement
+bindkey '^[f' forward-word                 # Alt+F move forward one word
+bindkey '^[b' backward-word                # Alt+B move back one word
+
+# Search command history
+bindkey '^R' history-incremental-search-backward
+
+# Clear screen
+bindkey '^L' clear-screen
+
+# Delete one character forward (like DEL)
+bindkey '^D' delete-char
+
+# Re-run last command with sudo
+bindkey '^[s' "sudo !!\n"
+

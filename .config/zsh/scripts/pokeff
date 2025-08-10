@@ -1,0 +1,64 @@
+#!/bin/zsh
+# Centers Fastfetch's TEXT against the (taller) Pokemon logo by injecting "break" modules
+# directly into a temporary copy of your JSONC config (no jq/json5 needed).
+
+set -euo pipefail
+
+# --- Config path (arg 1 overrides default)
+cfg="${1:-$HOME/.config/fastfetch/config-pokemon.jsonc}"
+if [[ ! -f "$cfg" ]]; then
+  echo "Config not found: $cfg" >&2
+  exit 1
+fi
+
+tmp_cfg="$(mktemp -t config-pokemon-centered.XXXXXX.jsonc)"
+
+# --- 1) Generate the logo and measure its height (lines)
+logo="$(pokemon-colorscripts --no-title -s -r 1-3)"
+logo_lines=$(printf "%s\n" "$logo" | wc -l)
+
+# --- 2) Measure text height using your base config (no logo)
+text_lines=$(fastfetch -c "$cfg" --logo none | wc -l)
+
+# --- 3) Compute symmetric padding (top & bottom)
+diff=$(( logo_lines - text_lines ))
+if (( diff <= 0 )); then
+  pad_top=0
+  pad_bot=0
+else
+  pad_top=$(( diff / 2 ))
+  pad_bot=$(( diff - pad_top ))
+fi
+
+# --- 4) Inject "break" entries into the modules array (prepend top, append bot)
+# This preserves JSONC (comments, trailing commas). We just splice in lines.
+awk -v top="$pad_top" -v bot="$pad_bot" '
+  BEGIN { in_modules=0 }
+  {
+    if ($0 ~ /"modules"[[:space:]]*:[[:space:]]*\[/) {
+      print $0
+      in_modules=1
+      for (i=0; i<top; i++) print "        \"break\","
+      next
+    }
+    if (in_modules && $0 ~ /^[[:space:]]*\][[:space:]]*,?[[:space:]]*$/) {
+      for (i=0; i<bot; i++) print "        \"break\","
+      in_modules=0
+      print $0
+      next
+    }
+    print $0
+  }
+' "$cfg" > "$tmp_cfg"
+
+# --- 5) Run Fastfetch with modified config, feeding the logo via stdin
+clear
+printf "%s" "$logo" | fastfetch -c "$tmp_cfg" --logo-type file-raw --logo -
+
+# Uncomment if you want to keep the temp for debugging:
+# echo "Temp config at: $tmp_cfg"
+# exit 0
+
+# --- 6) Cleanup
+rm -f "$tmp_cfg"
+

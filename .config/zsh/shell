@@ -1,0 +1,19 @@
+# History control
+HISTFILE=~/.zsh_history
+
+setopt append_history
+setopt share_history
+setopt appendhistory
+setopt sharehistory
+
+HISTSIZE=32768
+SAVEHIST=32768
+
+HISTFILESIZE="${HISTSIZE}"
+
+# Autocompletion
+# autoload -Uz compinit && compinit
+
+# Set complete path
+export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omarchy/bin:$HOME/.config/zsh/scripts:$PATH"
+
