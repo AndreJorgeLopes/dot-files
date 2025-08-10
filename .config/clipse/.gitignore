@@ -1,0 +1,20 @@
+# Ignore runtime history/state
+clipboard*_history*.json*
+history*.json*
+*.sqlite
+*.log
+*.lock
+cache/
+state/
+
+# Allow configs
+!config*
+!*.conf
+!*.toml
+!*.yaml
+!*.yml
+!custom_theme.json
+
+# Keep the directory even if empty
+!.gitignore
+
