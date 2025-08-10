@@ -11,3 +11,7 @@ if command -v fzf &> /dev/null; then
     source /usr/share/fzf/key-bindings.zsh
   fi
 fi
+
+# Create ssh agent if needed
+eval "$(keychain --eval --quiet id_ed25519)"
+

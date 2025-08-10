@@ -9,10 +9,23 @@ plugins=(
     zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
 
 # Check archlinux plugin commands here
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/archlinux
+
+# Set-up FZF key bindings (CTRL R for fuzzy history finder)
+
+# Imports
+source $ZSH/oh-my-zsh.sh
+
+source <(fzf --zsh)
+
+source ~/.config/zsh/shell
+source ~/.config/zsh/keybinds
+source ~/.config/zsh/aliases
+source ~/.config/zsh/functions
+source ~/.config/zsh/envs
+source ~/.config/zsh/init
 
 # Display Pokemon-colorscripts
 # Project page: https://gitlab.com/phoneybadger/pokemon-colorscripts#on-other-distros-and-macos
@@ -22,16 +35,3 @@ pokeff
 
 # fastfetch. Will be disabled if above colorscript was chosen to install
 #fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
-
-# Set-up FZF key bindings (CTRL R for fuzzy history finder)
-
-# Imports
-source <(fzf --zsh)
-
-source ~/.config/zsh/.keybinds
-
-source ~/.config/zsh/shell
-source ~/.config/zsh/aliases
-source ~/.config/zsh/functions
-source ~/.config/zsh/init
-source ~/.config/zsh/envs

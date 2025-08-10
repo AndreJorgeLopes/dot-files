@@ -1,11 +1,15 @@
 # File system
-alias ls='eza -lh --group-directories-first --icons=auto'
-alias lsa='ls -a'
+alias ls='exa -lahF --group-directories-first --color=auto --git --icons --no-permissions --no-user --long --grid --git-ignore'
+alias ll='exa -lahF --group-directories-first --color=auto --git --icons --long --grid'
 alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
 alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 alias fd='fdfind'
+alias rf='sudo rm -r'
+alias rff='sudo rm -rf'
+alias mkdir="take -pv"
 alias cd="zd"
+alias ci='zi'
 zd() {
   if [ $# -eq 0 ]; then
     builtin cd ~ && return
@@ -23,14 +27,59 @@ open() {
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias home='cd ~' # just writting an tilde works too
+alias back="popd &> /dev/null" # just writting an hifen works too
+alias zshconfig='nvim $HOME/.config/zsh/.zshrc'
+alias aliases='nvim $HOME/.config/zsh/aliases'
+alias s='sudo'
+alias dev="cd $HOME/dev"
 
 # Tools
 alias n='nvim'
 alias g='git'
 alias d='docker'
 alias r='rails'
+alias cat="glow"
+alias bat="bat --theme OneHalfDark"
 
 # Git
-alias gcm='git commit -m'
-alias gcam='git commit -a -m'
-alias gcad='git commit -a --amend'
+alias gl='git-igitt -f "[%an]%d %s -> %h"'
+alias gcr='git commit --amend -m'
+alias gc='git commit -m'
+# alias gc='cz'
+alias ga='git add'
+alias gb='git checkout -b'
+alias gcb='git checkout -b'
+alias gco='git checkout -b'
+alias switch='git switch'
+alias gs='git stash'
+alias gsp='git stash pop'
+alias gss='git stash save -u'
+alias gst='git status -sb'
+alias gw='git worktree'
+alias gwl='git worktree list'
+alias gdiscard='git checkout --'
+alias mergetest='git merge --no-commit --no-ff "$1"; git merge --abort; echo "Merge aborted"'
+alias gp-remote='git push --set-upstream'
+alias git-remove-merged="git branch --merged | egrep -v '(^\*|master|main|dev|qa)' | xargs git branch -d"
+alias git-serve='echo "connect using:\n\033[38;5;250m git fetch \033[38;5;46mgit://$(ipconfig getifaddr en0)/\n \033[38;5;15m or \n\033[38;5;250m git clone \033[38;5;46mgit://$(ipconfig getifaddr en0)/ \033[38;5;147m"; git daemon --verbose --export-all --base-path=$(git rev-parse --show-toplevel)/.git --reuseaddr --strict-paths $(git rev-parse --show-toplevel)/.git/; echo "\033[0m"'
+# git rebase force even with untracked and unstaged changes
+alias grf='f() { echo fetching...; git fetch; if [ $? -eq 0 ]; then last_status=$(git status --untracked-files=no --porcelain); if [ "$last_status" != "" ]; then echo stashing local changes...; git stash; else echo nothing to stash...; fi; if [ $? -eq 0 ]; then echo rebasing...; git rebase; if [ $? -eq 0 ]; then if [ "$last_status" != "" ]; then echo applying stashed changes...; git stash pop; if [ $? -ne 0 ]; then echo STASH POP FAIL - you will need to resolve merge conflicts with git mergetool; fi; fi; else echo REBASE FAILED - you will need to manually run stash pop; fi; fi; fi; if [ $? -ne 0 ]; then echo ERROR: Operation failed; fi; }; f'
+
+# Pacman
+alias update="sudo pacman -Syu"
+
+# config aliases
+alias config='yadm'
+alias coa='config add' # "co-nfig" "a-dd"
+alias coal='config add -u' # "co-nfig" "a-dd" "al-l"
+alias cop='config push' # "co-nfig" "p-ush"
+alias col='config flog' # "co-nfig" "l-og"
+alias coe='config fedit' # "co-nfig" "e-dit"
+alias coc='config commit -m' # "co-nfig" "c-ommit"
+alias cos='config status -sb' # "co-nfig" "s-tatus"
+alias cod='config checkout --' # "co-nfig" "d-iscard"
+
+# General
+alias reload='exec ${SHELL} -l' # ^ + L
+alias edit='sudo nvim'

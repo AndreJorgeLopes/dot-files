@@ -1,3 +1,5 @@
+export PATH="$HOME/.config/zsh/scripts:./bin:$HOME/.local/bin:$HOME/.local/share/omarchy/bin:$PATH"
+
 # History control
 HISTFILE=~/.zsh_history
 
@@ -15,5 +17,4 @@ HISTFILESIZE="${HISTSIZE}"
 # autoload -Uz compinit && compinit
 
 # Set complete path
-export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omarchy/bin:$HOME/.config/zsh/scripts:$PATH"
 

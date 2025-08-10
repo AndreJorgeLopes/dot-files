@@ -66,5 +66,56 @@ web2app-remove() {
   rm "$ICON_PATH"
 }
 
+# Search aliases with fzf
+function fzf_alias() {
+    local selection
+    if selection=$(alias | fzf --query="$BUFFER" | sed -re 's/=.+$/ /'); then
+        BUFFER=$selection
+    fi
+}
+
+# Paste the ouput of the last command
+function insert-last-command-output() {
+  LBUFFER+="$(eval $history[$((HISTCMD-1))])"
+}
+
+# Git add and commit alias
+function gac() {
+    git add .
+    if [ "$1" != "" ]
+    then
+	git commit -m "$1"
+    else
+	cz
+	# echo "Stop being dumb! \n Take a break, get a coffee and run the alias again but this time with a commit message."
+    fi
+}
+
+# Git worktree add
+function gwa() {
+    if [ "$1" != "" ]
+    then
+	git worktree add ../$(echo "$1" | sed "s./.--.g") $2 -b $1 &&
+  echo "$2" | grep -qv "^origin/" || git branch --unset-upstream $1;
+    else
+	echo "0 parameters were provided.- \n $1 = branch \n $2 = options extra parameters"
+    fi
+}
+
+#Git worktree remove and delete branch
+function gwr() {
+    WORKTREE_PATH=../$(echo "$1" | sed "s./.--.g")
+    git worktree remove $WORKTREE_PATH $2
+    if [ "$?" = 0 ]
+    then
+  echo "Worktree ${WORKTREE_PATH} successfully removed."
+  git branch -d $1
+    else
+  echo "Worktree ${WORKTREE_PATH} returned the following error code. \n Error code: $?"
+    fi
+}
+
+
+
 # Ensure that external keyboards that use an fn key has the F keys as the default
 alias fix_fkeys='echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode'
