@@ -31,6 +31,7 @@ alias home='cd ~' # just writting an tilde works too
 alias back="popd &> /dev/null" # just writting an hifen works too
 alias zshconfig='nvim $HOME/.config/zsh/.zshrc'
 alias aliases='nvim $HOME/.config/zsh/aliases'
+alias bindings='nvim $HOME/.config/hypr/bindings.conf'
 alias s='sudo'
 alias dev="cd $HOME/dev"
 
@@ -76,7 +77,8 @@ alias coal='config add -u' # "co-nfig" "a-dd" "al-l"
 alias cop='config push' # "co-nfig" "p-ush"
 alias col='config flog' # "co-nfig" "l-og"
 alias coe='config fedit' # "co-nfig" "e-dit"
-alias coc='config commit -m' # "co-nfig" "c-ommit"
+alias coc='config commit' # "co-nfig" "c-ommit"
+#alias coc='config commit -m' # "co-nfig" "c-ommit"
 alias cos='config status -sb' # "co-nfig" "s-tatus"
 alias cod='config checkout --' # "co-nfig" "d-iscard"
 

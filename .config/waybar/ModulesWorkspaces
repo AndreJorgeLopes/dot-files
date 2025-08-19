@@ -7,16 +7,18 @@
 {
 // CIRCLES Style
 "hyprland/workspaces": {
-	"active-only": false,
+	"active-only": true,
 	"all-outputs": true,
 	"format": "{icon}",
 	"show-special": false,
 	"on-click": "activate",
 	"on-scroll-up": "hyprctl dispatch workspace e+1",
 	"on-scroll-down": "hyprctl dispatch workspace e-1",
-    "persistent-workspaces": {
-      "*": 5
-	},
+  "persistent-workspaces": {
+    "DP-2": [1],
+    "DP-3": [2],
+    "DP-1": [3],
+  },
 	"format-icons": {
 		"active": "",
 		"default": "",
@@ -31,9 +33,11 @@
 	"on-click": "activate",
 	"on-scroll-up": "hyprctl dispatch workspace e+1",
 	"on-scroll-down": "hyprctl dispatch workspace e-1",
-    "persistent-workspaces": {
-      "*": 5
-	},
+  "persistent-workspaces": {
+    "DP-2": [1],
+    "DP-3": [2],
+    "DP-1": [3],
+    },
 	"format-icons": {
 		"1": "I",
 		"2": "II",
@@ -56,9 +60,11 @@
 	"on-scroll-up": "hyprctl dispatch workspace e+1",
 	"on-scroll-down": "hyprctl dispatch workspace e-1",
 	"show-special": false,
-    "persistent-workspaces": {
-      "*": 5
-	},
+  "persistent-workspaces": {
+    "DP-2": [1],
+    "DP-3": [2],
+    "DP-1": [3],
+  },
 	"format": "{icon}",
 	"format-icons": {
             "active": "<span font='12'>󰮯</span>",
@@ -72,9 +78,11 @@
 	"show-special": false,
 	"all-outputs": true,
 	"format": "{icon}",
-    "persistent-workspaces": {
-      "*": 5
-	},
+  "persistent-workspaces": {
+    "DP-2": [1],
+    "DP-3": [2],
+    "DP-1": [3],
+  },
 	"format-icons": {
 		"1": "一",
 		"2": "二",
@@ -97,9 +105,11 @@
 	"on-click": "activate",
 	"on-scroll-up": "hyprctl dispatch workspace e+1",
 	"on-scroll-down": "hyprctl dispatch workspace e-1",
-    "persistent-workspaces": {
-      "*": 5
-	},
+  "persistent-workspaces": {
+    "DP-2": [1],
+    "DP-3": [2],
+    "DP-1": [3],
+  },
 		"format-icons": {
 		"1": "Uno",
 		"2": "Due",
@@ -125,6 +135,11 @@
 	"on-scroll-down": "hyprctl dispatch workspace e-1",
 	"all-outputs": true,
 	"sort-by-number": true,
+  "persistent-workspaces": {
+    "DP-2": [1],
+    "DP-3": [2],
+    "DP-1": [3],
+  },
 	"format-icons": {
 		"1": " ",
 		"2": " ",
@@ -149,9 +164,11 @@
 	"on-click": "activate",
 	"on-scroll-up": "hyprctl dispatch workspace e+1",
 	"on-scroll-down": "hyprctl dispatch workspace e-1",
-    "persistent-workspaces": {
-      "*": 5
-	},
+  "persistent-workspaces": {
+    "DP-2": [1],
+    "DP-3": [2],
+    "DP-1": [3],
+  },
 	"format-icons": {
 		"1": "1",
 		"2": "2",
@@ -175,9 +192,11 @@
 	"on-click": "activate",
 	"on-scroll-up": "hyprctl dispatch workspace e+1",
 	"on-scroll-down": "hyprctl dispatch workspace e-1",
-	"persistent-workspaces": {
-		"*": 5
-	  },
+  "persistent-workspaces": {
+    "DP-2": [1],
+    "DP-3": [2],
+    "DP-1": [3],
+  },
 	"format": "{icon} {windows}",
 	"format-window-separator": " ",
 	"window-rewrite-default": " ",
