@@ -1,0 +1,12 @@
+# Ignore everything
+/*
+
+# But not these files...
+!.gitignore
+!HEY.desktop
+!Basecamp.desktop
+!Google Photos.desktop
+!Google Messages.desktop
+!Google Contacts.desktop
+!Discord.desktop
+
