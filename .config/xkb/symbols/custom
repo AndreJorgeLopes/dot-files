@@ -1,0 +1,12 @@
+partial modifier_keys
+xkb_symbols "capsofffix" {
+  // Make toggling caps OFF take effect immediately even if you type fast.
+  replace key <CAPS> {
+    type="ALPHABETIC",
+    repeat=No,
+    symbols[Group1] = [ Shift_Lock, Shift_Lock ],
+    actions[Group1] = [ LockMods(modifiers=Shift),
+                        LockMods(modifiers=Shift+Lock, affect=unlock) ]
+  };
+  modifier_map Shift { Shift_Lock };
+};

@@ -1,0 +1,5 @@
+// Extend system evdev rules with a user option.
+! include %S/evdev
+
+! option  =  symbols
+custom:capsofffix = +custom(capsofffix)
