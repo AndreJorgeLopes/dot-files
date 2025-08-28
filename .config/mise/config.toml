@@ -1,0 +1,40 @@
+[settings]
+idiomatic_version_file_enable_tools = ["ruby"]
+
+[settings.ruby]
+ruby_build_opts = "CC=gcc-14 CXX=g++-14"
+
+[tools]
+protonge = { version = "latest", postinstall = '''
+# 1) Pick the right Steam compat dir (override by exporting STEAM_COMPAT)
+STEAM_COMPAT="${STEAM_COMPAT:-$HOME/.steam/steam/compatibilitytools.d}"
+[ -d "$HOME/.var/app/com.valvesoftware.Steam/data/Steam/compatibilitytools.d" ] && \
+  STEAM_COMPAT="$HOME/.var/app/com.valvesoftware.Steam/data/Steam/compatibilitytools.d"
+[ -d "$HOME/snap/steam/common/.steam/steam/compatibilitytools.d" ] && \
+  STEAM_COMPAT="$HOME/snap/steam/common/.steam/steam/compatibilitytools.d"
+
+# 2) Ensure the stable wrapper exists
+mkdir -p "$STEAM_COMPAT/GE-Proton"
+cat > "$STEAM_COMPAT/GE-Proton/compatibilitytool.vdf" <<'VDF'
+"compatibilitytools"
+{
+  "compat_tools"
+  {
+    "GE-Proton"
+    {
+      "install_path" "current"
+      "display_name" "GE-Proton (latest)"
+      "from_oslist" "windows"
+      "to_oslist"   "linux"
+      "priority"    "250"
+      "unlisted"    "0"
+    }
+  }
+}
+VDF
+
+# 3) Repoint "current" at the newest GE-Proton* folder dropped by the installer
+cd "$STEAM_COMPAT/GE-Proton"
+latest="$(ls -d ../GE-Proton* 2>/dev/null | sort -V | tail -n1)"
+[ -n "$latest" ] && ln -sfn "$latest" current
+''' }

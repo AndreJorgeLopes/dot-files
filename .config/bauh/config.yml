@@ -1,12 +1,12 @@
 backup:
   downgrade: null
   enabled: true
-  install: null
+  install: false
   mode: incremental
   remove_method: self
   type: rsync
   uninstall: null
-  upgrade: null
+  upgrade: false
 boot:
   load_apps: true
 disk:
@@ -18,9 +18,9 @@ download:
   multithreaded: true
   multithreaded_client: null
 gems:
-- flatpak
 - arch
 - appimage
+- flatpak
 locale: null
 memory_cache:
   data_expiration: 3600
